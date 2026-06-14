@@ -1,0 +1,46 @@
+package com.uber.uberApp.entities;
+
+import com.uber.uberApp.entities.enums.PaymentMethod;
+import com.uber.uberApp.entities.enums.RideRequestStatus;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.locationtech.jts.geom.Point;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "ride_request")
+@Getter
+@Setter
+public class RideRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rider rider;
+
+    @Column(columnDefinition = "Geometry(Point, 4326)")
+    private Point pickupLocation;
+
+    @Column(columnDefinition = "Geometry(Point, 4326)")
+    private Point dropOffLocation;
+
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
+    @UpdateTimestamp
+    private LocalDateTime modifiedDate;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private RideRequestStatus rideRequestStatus;
+
+    private Double fare;
+}
