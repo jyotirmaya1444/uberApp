@@ -17,6 +17,12 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rider rider;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Driver driver;
+
     @Column(columnDefinition = "Geometry(Point, 4326)")
     private Point pickupLocation;
 
@@ -28,12 +34,6 @@ public class Ride {
 
     @UpdateTimestamp
     private LocalDateTime modifiedDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Rider rider;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Driver driver;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
